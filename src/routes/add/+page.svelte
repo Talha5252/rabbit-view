@@ -1,4 +1,11 @@
 <script>
-    /** @type {import('./$types').PageProps} */
-    let { data } = $props();
+	import RabbitForm from "$lib/components/RabbitForm.svelte";
+
+    
+
+
+
+
 </script>
+
+<RabbitForm>    </RabbitForm>

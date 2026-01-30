@@ -1,18 +1,28 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { pb, store } from '$lib/store.svelte.js';
 
 
-	let name = $state('');
-	let wrongRabbitName = $derived(name.length > 0 && name[0] !== 'J');
+	let rabbit = $state({
+		name: "New Name",
+		rabbithole: ""
+
+	});
+
+
+
+
+	let wrongRabbitName = $derived(rabbit.name.length > 0 && rabbit.name[0] !== 'J');
 	let rabbithole = $state(null);
 	
 	let rabbitholes = $state([])
 	
 	
 	async function addRabbit() {
-		await store.addRabbit(name,rabbithole);
+		await store.addRabbit(rabbit);
 		name = '';
 		store.listRabbits();
+		goto('/');
 	}
 
 
@@ -23,7 +33,7 @@
 
 <div>
 <label for="name">Name</label>
-<input id="name" type="text" bind:value={name} class="input" />
+<input id="name" type="text" bind:value={rabbit.name} class="input" />
 </div>
 
 <div>
@@ -34,7 +44,7 @@
 		{/each}
 	</select>
 </div>
-<button class="btn btn-primary" onclick={addRabbit} disabled={wrongRabbitName || name.length === 0}
+<button class="btn btn-primary" onclick={addRabbit} disabled={wrongRabbitName || rabbit.name.length === 0}
 	>Add Rabbit!</button
 >
 {#if wrongRabbitName}
